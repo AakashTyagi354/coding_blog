@@ -19,7 +19,14 @@ interface IFormInput {
 const Post = ({ post }: Props) => {
   const session = useSession();
   const [submited, setSubmited] = useState(false);
+  const login = (e: { preventDefault: () => void; }) =>{
+    signIn()
 
+  }
+  const logout = (e: { preventDefault: () => void; }) =>{
+    signOut()
+
+  }
   console.log(post.comments);
   const {
     register,
@@ -93,93 +100,108 @@ const Post = ({ post }: Props) => {
         </div>
       </article>
       <hr className="max-w-lg my-5 mx-auto border border-yellow-500" />
-      
-      {session.data !== null ? <>
-        {submited ? (
-        <div className="flex flex-col p-10 my-10 bg-yellow-500 text-white max-w-2xl mx-auto">
-          <h3 className="text-3xl font-bold">
-            Thank you for submitting your comment!
-          </h3>
-          <p>Once it has been approved,it will apear below!</p>
-        </div>
-      ) : (
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col p-5 max-w-2xl mx-auto mb-10"
-        >
-          <h3 className="text-sm text-yellow-500 ">Enjoyed this artical</h3>
-          <h4 className="text-3xl font-bold">Leave a comment below</h4>
-          <hr className="py-3 mt-2" />
 
-          <input
-            {...register("_id")}
-            type="hidden"
-            name="_id"
-            value={post._id}
-          />
-          <label className="block mt-5">
-            <span className="text-gray-700 dark:text-white">Name</span>
-            <input
-              {...register("name", { required: true })}
-              className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
-              type="text"
-              placeholder="John Applesed"
-            />
-          </label>
-          <label className="block mt-5">
-            <span className="text-gray-700 dark:text-white">Email</span>
-            <input
-              {...register("email", { required: true })}
-              className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
-              type="email"
-              placeholder="John Applesed"
-            />
-          </label>
-          <label className="block mt-5">
-            <span className="text-gray-700 dark:text-white">Comment</span>
-            <textarea
-              {...register("comment", { required: true })}
-              className=" dark:bg-white shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring"
-              placeholder="write some thing"
-              rows={8}
-            />
-          </label>
-          {/* error for validation */}
-          <div className="flex flex-col p-5">
-            {errors.name && (
-              <div className="bg-red-600 flex items-center p-1 rounded-full mt-1">
-                <CancelOutlinedIcon className="text-white ml-1" />
-                <p className="mx-auto text-white">The Name field is required</p>
+      {session.data !== null ? (
+        <>
+          {submited ? (
+            <div className="flex flex-col p-10 my-10 bg-yellow-500 text-white max-w-2xl mx-auto">
+              <h3 className="text-3xl font-bold">
+                Thank you for submitting your comment!
+              </h3>
+              <p>Once it has been approved,it will apear below!</p>
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex flex-col p-5 max-w-2xl mx-auto mb-10"
+            >
+              <h3 className="text-sm text-yellow-500 ">Enjoyed this artical</h3>
+              <h4 className="text-3xl font-bold">Leave a comment below</h4>
+              <hr className="py-3 mt-2" />
+
+              <input
+                {...register("_id")}
+                type="hidden"
+                name="_id"
+                value={post._id}
+              />
+              <label className="block mt-5">
+                <span className="text-gray-700 dark:text-white">Name</span>
+                <input
+                  {...register("name", { required: true })}
+                  className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+                  type="text"
+                  placeholder="John Applesed"
+                />
+              </label>
+              <label className="block mt-5">
+                <span className="text-gray-700 dark:text-white">Email</span>
+                <input
+                  {...register("email", { required: true })}
+                  className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+                  type="email"
+                  placeholder="John Applesed"
+                />
+              </label>
+              <label className="block mt-5">
+                <span className="text-gray-700 dark:text-white">Comment</span>
+                <textarea
+                  {...register("comment", { required: true })}
+                  className=" dark:bg-white shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+                  placeholder="write some thing"
+                  rows={8}
+                />
+              </label>
+              {/* error for validation */}
+              <div className="flex flex-col p-5">
+                {errors.name && (
+                  <div className="bg-red-600 flex items-center p-1 rounded-full mt-1">
+                    <CancelOutlinedIcon className="text-white ml-1" />
+                    <p className="mx-auto text-white">
+                      The Name field is required
+                    </p>
+                  </div>
+                  // <span className="text-red-500">-</span>
+                )}
+                {errors.email && (
+                  <div className="bg-red-600 flex items-center p-1 rounded-full mt-1">
+                    <CancelOutlinedIcon className="text-white ml-1" />
+                    <p className="mx-auto text-white">
+                      The Email field is required
+                    </p>
+                  </div>
+                )}
+                {errors.comment && (
+                  <div className="bg-red-600 flex items-center p-1 mt-1 rounded-full">
+                    <CancelOutlinedIcon className="text-white ml-1" />
+                    <p className="mx-auto text-white">
+                      The Comment field is required
+                    </p>
+                  </div>
+                )}
               </div>
-              // <span className="text-red-500">-</span>
-            )}
-            {errors.email && (
-              <div className="bg-red-600 flex items-center p-1 rounded-full mt-1">
-                <CancelOutlinedIcon className="text-white ml-1" />
-                <p className="mx-auto text-white">
-                  The Email field is required
-                </p>
-              </div>
-            )}
-            {errors.comment && (
-              <div className="bg-red-600 flex items-center p-1 mt-1 rounded-full">
-                <CancelOutlinedIcon className="text-white ml-1" />
-                <p className="mx-auto text-white">
-                  The Comment field is required
-                </p>
-              </div>
-            )}
-          </div>
-          <input
-            type="submit"
-            className="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none py-2 text-white font-bold rounded cursor-pointer"
-          />
-        </form>
+              <input
+                type="submit"
+                className="shadow bg-yellow-500 hover:bg-yellow-400 focus:shadow-outline focus:outline-none py-2 text-white font-bold rounded cursor-pointer"
+              />
+            </form>
+          )}
+        </>
+      ) : (
+        <div className="flex justify-center items-center">
+          <p className=" text-sm md:text-2xl text-gary-600">
+            Wants to leave a comment{" "}
+            <button
+              className="pl-1 pr-1 underline text-blue-600"
+              onClick={login}
+            >
+              {" "}
+              login{" "}
+            </button>
+            with you account
+          </p>
+        </div>
       )}
-      </>:<div className="flex justify-center items-center">
-      <p className=" text-sm md:text-2xl text-gary-600">Wants to leave a comment <button className="pl-1 pr-1 underline text-blue-600" onClick={signIn}>  login </button>with you account</p>
-      </div>
-}
       <div className="flex flex-col p-10 my-10 max-w-2xl mx-auto shadow-yellow-500 shadow space-y-2">
         <h3 className="text-4xl">comments</h3>
         <hr className="pb-2" />
