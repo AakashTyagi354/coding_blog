@@ -5,6 +5,8 @@ import { Post } from "../../typinng";
 import PortableText from "react-portable-text";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
+import { useSession, signIn, signOut } from "next-auth/react";
 interface Props {
   post: Post;
 }
@@ -15,6 +17,7 @@ interface IFormInput {
   comment: string;
 }
 const Post = ({ post }: Props) => {
+  const session = useSession();
   const [submited, setSubmited] = useState(false);
 
   console.log(post.comments);
@@ -90,7 +93,9 @@ const Post = ({ post }: Props) => {
         </div>
       </article>
       <hr className="max-w-lg my-5 mx-auto border border-yellow-500" />
-      {submited ? (
+      
+      {session.data !== null ? <>
+        {submited ? (
         <div className="flex flex-col p-10 my-10 bg-yellow-500 text-white max-w-2xl mx-auto">
           <h3 className="text-3xl font-bold">
             Thank you for submitting your comment!
@@ -113,28 +118,28 @@ const Post = ({ post }: Props) => {
             value={post._id}
           />
           <label className="block mt-5">
-            <span className="text-gray-700">Name</span>
+            <span className="text-gray-700 dark:text-white">Name</span>
             <input
               {...register("name", { required: true })}
-              className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+              className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
               type="text"
               placeholder="John Applesed"
             />
           </label>
           <label className="block mt-5">
-            <span className="text-gray-700">Email</span>
+            <span className="text-gray-700 dark:text-white">Email</span>
             <input
               {...register("email", { required: true })}
-              className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+              className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
               type="email"
               placeholder="John Applesed"
             />
           </label>
           <label className="block mt-5">
-            <span className="text-gray-700">Comment</span>
+            <span className="text-gray-700 dark:text-white">Comment</span>
             <textarea
               {...register("comment", { required: true })}
-              className="shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+              className=" dark:bg-white shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring"
               placeholder="write some thing"
               rows={8}
             />
@@ -142,15 +147,27 @@ const Post = ({ post }: Props) => {
           {/* error for validation */}
           <div className="flex flex-col p-5">
             {errors.name && (
-              <span className="text-red-500">-The Name field is required</span>
+              <div className="bg-red-600 flex items-center p-1 rounded-full mt-1">
+                <CancelOutlinedIcon className="text-white ml-1" />
+                <p className="mx-auto text-white">The Name field is required</p>
+              </div>
+              // <span className="text-red-500">-</span>
             )}
             {errors.email && (
-              <span className="text-red-500">-The Email field is required</span>
+              <div className="bg-red-600 flex items-center p-1 rounded-full mt-1">
+                <CancelOutlinedIcon className="text-white ml-1" />
+                <p className="mx-auto text-white">
+                  The Email field is required
+                </p>
+              </div>
             )}
             {errors.comment && (
-              <span className="text-red-500">
-                -The Comment field is required
-              </span>
+              <div className="bg-red-600 flex items-center p-1 mt-1 rounded-full">
+                <CancelOutlinedIcon className="text-white ml-1" />
+                <p className="mx-auto text-white">
+                  The Comment field is required
+                </p>
+              </div>
             )}
           </div>
           <input
@@ -159,13 +176,18 @@ const Post = ({ post }: Props) => {
           />
         </form>
       )}
+      </>:<div className="flex justify-center items-center">
+      <p className=" text-sm md:text-2xl text-gary-600">Wants to leave a comment <button className="pl-1 pr-1 underline text-blue-600" onClick={signIn}>  login </button>with you account</p>
+      </div>
+}
       <div className="flex flex-col p-10 my-10 max-w-2xl mx-auto shadow-yellow-500 shadow space-y-2">
         <h3 className="text-4xl">comments</h3>
         <hr className="pb-2" />
         {post.comments.map((comment) => (
-          <div key={comment._id} className="" >
+          <div key={comment._id} className="">
             <p className="">
-             <span className="text-yellow-500">{comment.name}</span> :{comment.comment}
+              <span className="text-yellow-500">{comment.name}</span> :
+              {comment.comment}
             </p>
           </div>
         ))}
