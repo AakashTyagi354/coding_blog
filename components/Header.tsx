@@ -10,9 +10,14 @@ import {useSession,signIn,signOut} from 'next-auth/react'
 const Header = () => {
   const session = useSession();
   console.log(session)
-  // if(session.data === null){
-  //   return <button onClick={signIn}>Login</button>
-  // }
+  const login = (e: { preventDefault: () => void; }) =>{
+    signIn()
+
+  }
+  const logout = (e: { preventDefault: () => void; }) =>{
+    signOut()
+
+  }
  
   const [mounted, setMounted] = useState(false);
 
@@ -64,11 +69,11 @@ const Header = () => {
         </div>
       </div>
       <div className="flex items-center space-x-5 text-green-600 ">
-      {session.data === null &&  <button className="cursor-pointer text-blue-600 hover:underline" onClick={signIn}>Login</button> }
+      {session.data === null &&  <button className="cursor-pointer text-blue-600 hover:underline" onClick={login}>Login</button> }
        {session.data != null && <div className="flex">
                     <p className=" text-gray-600 dark:text-white pr-6 mt-1 items-center">{session?.data?.user?.name}</p>
-                    <img  src={session?.data?.user?.image} className=" mr-4 h-10 w-10 rounded-full" alt="" />
-                    <button className="cursor-pointer text-blue-600 hover:underline" onClick={signOut}>LogOut</button>
+                    <img  src={session?.data?.user?.image!} className=" mr-4 h-10 w-10 rounded-full" alt="" />
+                    <button className="cursor-pointer text-blue-600 hover:underline" onClick={logout}>LogOut</button>
         </div>}
         {/* <h3 className=" cursor-pointer border px-4 py-1 rounded-full border-green-500">
           Get Started
