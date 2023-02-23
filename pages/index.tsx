@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { sanityClient, urlFor } from "../sanity";
 import Head from "next/head";
-import Header from "../components/Header";
+import Header from "../components/Header.js";
 import { Post } from "../typinng";
 import Link from "next/link";
 import Footer from "../components/Footer";
