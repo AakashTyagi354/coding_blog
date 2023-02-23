@@ -72,7 +72,7 @@ const Header = () => {
       {session.data === null &&  <button className="cursor-pointer text-blue-600 hover:underline" onClick={login}>Login</button> }
        {session.data != null && <div className="flex">
                     <p className=" text-gray-600 dark:text-white pr-6 mt-1 items-center">{session?.data?.user?.name}</p>
-                    <img  src={session?.data?.user?.image} className=" mr-4 h-10 w-10 rounded-full" alt="" />
+                    <img  src={session?.data?.user?.image!} className=" mr-4 h-10 w-10 rounded-full" alt="" />
                     <button className="cursor-pointer text-blue-600 hover:underline" onClick={logout}>LogOut</button>
         </div>}
         {/* <h3 className=" cursor-pointer border px-4 py-1 rounded-full border-green-500">
