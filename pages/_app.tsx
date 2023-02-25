@@ -7,7 +7,7 @@ import { SessionProvider } from "next-auth/react";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider enableSystem={true} attribute="class" >
-      <SessionProvider session={pageProps.session} baseUrl="https://newblog-ek8f1b68m-aakashtyagi354.vercel.app/">
+      <SessionProvider session={pageProps.session} >
         <Component {...pageProps} />
       </SessionProvider>
       {/* <Component {...pageProps} /> */}

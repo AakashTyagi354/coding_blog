@@ -101,8 +101,8 @@ const Post = ({ post }: Props) => {
       </article>
       <hr className="max-w-lg my-5 mx-auto border border-yellow-500" />
 
-      {session.data !== null ? (
-        <>
+    
+        
           {submited ? (
             <div className="flex flex-col p-10 my-10 bg-yellow-500 text-white max-w-2xl mx-auto">
               <h3 className="text-3xl font-bold">
@@ -129,7 +129,7 @@ const Post = ({ post }: Props) => {
                 <span className="text-gray-700 dark:text-white">Name</span>
                 <input
                   {...register("name", { required: true })}
-                  className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+                  className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
                   type="text"
                   placeholder="John Applesed"
                 />
@@ -138,7 +138,7 @@ const Post = ({ post }: Props) => {
                 <span className="text-gray-700 dark:text-white">Email</span>
                 <input
                   {...register("email", { required: true })}
-                  className=" dark:bg-white shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+                  className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-yellow-500 outline-none focus:ring"
                   type="email"
                   placeholder="John Applesed"
                 />
@@ -147,7 +147,7 @@ const Post = ({ post }: Props) => {
                 <span className="text-gray-700 dark:text-white">Comment</span>
                 <textarea
                   {...register("comment", { required: true })}
-                  className=" dark:bg-white shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring"
+                  className="shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-yellow-500 outline-none focus:ring"
                   placeholder="write some thing"
                   rows={8}
                 />
@@ -186,9 +186,9 @@ const Post = ({ post }: Props) => {
               />
             </form>
           )}
-        </>
-      ) : (
-        <div className="flex justify-center items-center">
+     
+    
+        {/* <div className="flex justify-center items-center">
           <p className=" text-sm md:text-2xl text-gary-600">
             Wants to leave a comment{" "}
             <button
@@ -201,7 +201,7 @@ const Post = ({ post }: Props) => {
             with you account
           </p>
         </div>
-      )}
+      )} */}
       <div className="flex flex-col p-10 my-10 max-w-2xl mx-auto shadow-yellow-500 shadow space-y-2">
         <h3 className="text-4xl">comments</h3>
         <hr className="pb-2" />
